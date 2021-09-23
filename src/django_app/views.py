@@ -5,9 +5,13 @@ from .models import Cloth_img
 # from .gan import GeneImg
 
 def index(request):
-    images = Human_model_img.objects.all()
-    context = {'images': images}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html')
+
+def select_model(request):
+    if request.method == 'POST':
+        images = Human_model_img.objects.all()
+        context = {'images': images}
+        return render(request, 'model_select.html', context)   
 
 def select_cloth(request):
     if request.method == 'POST':
