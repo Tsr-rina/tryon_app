@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Human_model_img
 from .models import Cloth_img
-# from .gan import GeneImg
+# from .gan import CallNetWork
 
 def index(request):
     return render(request, 'index.html')
@@ -15,9 +15,6 @@ def select_model(request):
 
 def select_cloth(request):
     if request.method == 'POST':
-
-        
-
         # if 'None' in request.POST:
         #     context = {
         #         'alert':'モデルを選択してください'
@@ -105,7 +102,12 @@ def try_on(request):
     if request.method == 'POST':
 
         if 'media/cloth_img/cloth1.jpg' in request.POST:
-            # GeneImgに値を渡す
+
+
+            # img1, img2 = CallNetWork('media')
+            # CallNetWorkに
+
+
             context = {
                 'hello': 'Hello World!',
                 'path':'media_cloth/cloth1.jpg'
