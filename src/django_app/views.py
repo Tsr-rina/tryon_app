@@ -108,6 +108,7 @@ def try_on(request):
             # GeneImgに値を渡す
             context = {
                 'hello': 'Hello World!',
+                'path':'media_cloth/cloth1.jpg'
             }
             return render(request, 'result.html', context)
 
