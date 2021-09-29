@@ -102,7 +102,13 @@ def try_on(request):
     if request.method == 'POST':
 
         if 'media/cloth_img/cloth1.jpg' in request.POST:
-
+            keys_list = request.POST.keys()
+            keys_list = list(keys_list)
+            record = Human_model_img.objects.values('mask').filter(model_name=keys_list[0])
+            mask_path = list(list(record)[0].values())
+            print(mask_path[0])
+            
+            
 
             # img1, img2 = CallNetWork('media')
             # CallNetWorkに
@@ -110,7 +116,9 @@ def try_on(request):
 
             context = {
                 'hello': 'Hello World!',
-                'path':'media_cloth/cloth1.jpg'
+                'cloth_path':'media_cloth/cloth1.jpg',
+                'mask_path':mask_path
+
             }
             return render(request, 'result.html', context)
 

@@ -17,16 +17,16 @@
         <br>
         <br>
 
-        <div class='text-center' id='page-permid'>
-            <p>選択したモデル</p>
-            <img calss='img-fluid' src="{{ MEDIA_URL }}{{ img }}" alt="selected_model" name='{{ name }}' width="100">
-        </div>
-
-        <br>
-        <br>
-
-
         <form action="{% url 'tryon_app:tryon' %}" method="POST">
+
+            <div class='text-center' id='page-permid'>
+                <p>選択したモデル</p>
+                <input type="checkbox" name="{{ name }}" checked>
+                <img calss='img-fluid' src="{{ MEDIA_URL }}{{ img }}" alt="selected_model" width="100">
+            </div>
+    
+            <br>
+            <br>
             <div class="text-center">
                 <p>試着したい服を選択してください</p>
             </div>
