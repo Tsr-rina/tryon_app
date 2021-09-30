@@ -23,7 +23,7 @@ import cv2
 
 # ドメインAとドメインBの画像データセット生成クラス
 class ImageDataset(Dataset):
-    def __init__(self, root, ,rA, rB,transforms_=None, unaligned=False, mode='media'):
+    def __init__(self, root, rA, rB,transforms_=None, unaligned=False, mode='media'):
         self.transform = transforms.Compose(transforms_)
         self.unaligned = unaligned
 
@@ -109,7 +109,7 @@ class Generator(nn.Module):
 # call network
 
 class CallNetWork():
-    def __init__(self, rootHM,rootA, rootB):
+    def __init__(self, rootHM, rootA, rootB):
         self.rH = rootHM
         self.rA = rootA
         self.rB = rootB
@@ -138,11 +138,10 @@ class CallNetWork():
                 transforms.RandomCrop(opt2.size),
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))]
-        dataloader = DataLoader(ImageDataset(opt2.dataroot, ,self.rA, self.rB, transforms_=transforms_, mode='train'),
+        dataloader = DataLoader(ImageDataset(opt2.dataroot, self.rA, self.rB, transforms_=transforms_, mode='train'),
                                 batch_size=opt2.batch_size, shuffle=False, num_workers=opt2.n_cpu)
         
         return dataloader
-
 
     def make_img(self, dataloader):
 
@@ -152,10 +151,35 @@ class CallNetWork():
             real_B = Variable(input_B.copy_(batch['B']))
 
             # Generate output
+            # fake_B overlay
             fake_B = 0.5*(netG_A2B(real_A).data + 1.0)
             fake_A = 0.5*(netG_B2A(real_B).data + 1.0)
 
-            out_img1 = torch.cat([real_A, fake_B], dim=2)
-            out_img2 = torch.cat([real_B, fake_A], dim=2)
-        
-        return out_img1, out_img2
+            image = overlayImage(self.rootHM, fake_B, (0, 0))
+
+            image.save(output_url)
+
+            print('結果飛ばすよ')
+
+            return output_url
+    
+    def overlayImage(src, overlay, location):
+        overlay_height, overlay_width = overlay.shape[:2]
+
+        # 背景をPIL形式に変換
+        src = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
+        pil_src = Image.fromarray(src)
+        pil_src = pil_src.convert('RGBA')
+
+        # オーバーレイをPIL形式に変換
+        overlay = cv2.cvtColor(overlay, cv2.COLOR_BGRA2RGBA)
+        pil_overlay = Image.fromarray(overlay)
+        pil_overlay = pil_overlay.convert('RGBA')
+
+        # 画像を合成
+        pil_tmp = Image.new('RGBA', pil_src.size, (255, 255, 255, 0))
+        pil_tmp.paste(pil_overlay, location, pil_overlay)
+        result_image = Image.alpha_composite(pil_src, pil_tmp)
+
+        # OpenCV形式に変換
+        return cv2.cvtColor(np.asarray(result_image), cv2.COLOR_RGBA2BGRA)

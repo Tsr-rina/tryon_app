@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Human_model_img
 from .models import Cloth_img
-# from .gan import CallNetWork
+from .gan import CallNetWork
 
 def index(request):
     return render(request, 'index.html')
@@ -104,21 +104,22 @@ def try_on(request):
         if 'media/cloth_img/cloth1.jpg' in request.POST:
             keys_list = request.POST.keys()
             keys_list = list(keys_list)
-            record = Human_model_img.objects.values('mask').filter(model_name=keys_list[0])
-            mask_path = list(list(record)[0].values())
-            print(mask_path[0])
-            
-            
 
-            # img1, img2 = CallNetWork('media')
-            # CallNetWorkに
+            hm_img = Human_model_img.objects.values('img').filter(model_name=keys_list[0])
+            img_path = list(list(hm_img)[0].values())
+
+            hm_mask = Human_model_img.objects.values('mask').filter(model_name=keys_list[0])
+            mask_path = list(list(hm_mask)[0].values())
+            
+            image = CallNetWork(hm_img, mask_path, 'media/cloth_img/cloth1.jpg')
+
+            print(image)
 
 
             context = {
                 'hello': 'Hello World!',
                 'cloth_path':'media_cloth/cloth1.jpg',
-                'mask_path':mask_path
-
+                'mask_path':mask_path,
             }
             return render(request, 'result.html', context)
 
