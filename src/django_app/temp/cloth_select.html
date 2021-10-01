@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
-        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <nav class="navbar navbar-light" style="border-bottom: solid 5px black;">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">TryonApp</a>
@@ -22,7 +22,7 @@
             <div class='text-center' id='page-permid'>
                 <p>選択したモデル</p>
                 <input type="checkbox" name="{{ name }}" checked>
-                <img calss='img-fluid' src="{{ MEDIA_URL }}{{ img }}" alt="selected_model" width="100">
+                <img class='img-fluid' src="{{ MEDIA_URL }}{{ img }}" alt="selected_model" width="100">
             </div>
     
             <br>
@@ -43,7 +43,7 @@
 
                             <!-- <p>{{ image.cloth_name }}</p> -->
                             <img class='img-fluid' src="{{ MEDIA_URL }}{{ image.cloth_img }}" width="100"><br>
-                            <input type="checkbox" class="btn btn-primary" name="{{ image.cloth_img }}" value="{{ image.model_name }}">
+                            <input type="checkbox" class="btn btn-Light" name="{{ image.cloth_img }}" value="{{ image.model_name }}">
                         </div>
                         {% endfor %}
                     </div>
@@ -52,7 +52,7 @@
 
             <div class='text-center' id='submit_btn'>
                 <p>{{ alert }}</p>
-                <button type="submit" class="btn btn-primary" name="submit_btn" value=" submit_btn">試着結果へ</button>
+                <button type="submit" class="btn btn-Light" name="submit_btn" value=" submit_btn">試着結果へ</button>
             </div>
 
 

@@ -6,7 +6,7 @@
     </head>
     <body>
    
-        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <nav class="navbar navbar-light" style="border-bottom: solid 5px black;">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">TryonApp</a>
@@ -36,7 +36,10 @@
                         <!-- <p>{{ image.model_name }}</p> -->
                         <div class="col-md-4 img-hidden">
                             <img class='img-fluid' src="{{ MEDIA_URL }}{{ image.img }}" width="100"><br>
-                            <input class='text-center' type="checkbox" class="btn btn-primary" name="{{ image.model_name }}" value="{{ image.model_name }}"><br>
+                            <input type="radio" class="btn-check" name="options" name="{{image.model_name }}"id="option1" autocomplete="off" checked>
+                            <label class="btn btn-secondary" for="option1">Checked</label>
+
+                            <!-- <input class='text-center' type="checkbox" class="btn btn-Light" name="{{ image.model_name }}" value="{{ image.model_name }}"><br> -->
                         </div>
 
                         {% endfor %}
@@ -49,7 +52,7 @@
 
             <div class='text-center' id='submit_btn'>
                 <p>{{ alert }}</p>
-                <button type="submit" class="btn btn-primary" name="submit_btn" value="submit_btn">次へ</button> 
+                <button type="submit" class="btn btn-Light" name="submit_btn" value="submit_btn">次へ</button> 
             </div>
 
         </form>
