@@ -19,31 +19,47 @@
 
         <form action="{% url 'tryon_app:tryon' %}" method="POST">
 
-            <div class='text-center' id='page-permid'>
-                <p>選択したモデル</p>
-                <input type="checkbox" name="{{ name }}" checked>
-                <img class='img-fluid' src="{{ MEDIA_URL }}{{ img }}" alt="selected_model" width="100">
+            <div class='container container-m' id='page-permid'>
+                <nav class="navbar navbar-right bg-light">
+                    <span class="navbar-brand mb-0 h1 text-center">選択したモデル</span>
+                </nav>
+                <input  id="hide_checkbox" type="checkbox" name="{{ name }}" checked>
+                <br>
+                <br>
+                <img class='img-fluid' src="{{ MEDIA_URL }}{{ img }}" alt="selected_model" width="250">
             </div>
     
             <br>
-            <br>
-            <div class="text-center">
-                <p>試着したい服を選択してください</p>
-            </div>
-
             <br>
             <br>
 
             <div class='text-center' id='select_box'>
                 <div class='container container-m' id='cloth_image'>
+                    <nav class="navbar navbar-right bg-light">
+                        <span class="navbar-brand mb-0 h1 text-center">試着したい服を選択してください</span>
+                    </nav>
+                    <br>
+                    <br>
                     <div class="row">
                         {% csrf_token %}
                         {% for image in cloth_img %}
                         <div class="col-md-4 img-hidden">
+                            <div class="card" style="width: 18rem;">
+                                <br>
+                                <img class='img-fluid' src="{{ MEDIA_URL }}{{ image.cloth_img }}" width="auto" height="auto"><br>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-Secondary btn-block active">
+                                      <input type="radio" name="{{ image.cloth_img }}" value="{{ image.model_name }}" autocomplete="off">選択
+                                    </label>
+                                </div>         
 
+                            </div>
+                            <br>
                             <!-- <p>{{ image.cloth_name }}</p> -->
-                            <img class='img-fluid' src="{{ MEDIA_URL }}{{ image.cloth_img }}" width="100"><br>
-                            <input type="checkbox" class="btn btn-Light" name="{{ image.cloth_img }}" value="{{ image.model_name }}">
+
+                            <br>
+
+                            
                         </div>
                         {% endfor %}
                     </div>
@@ -57,7 +73,9 @@
 
 
         </form>
-        <!-- 戻るボタン -->
+        <script>
+            document.getElementById("hide_checkbox").style = "visibility:hidden;"
+        </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
