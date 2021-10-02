@@ -15,13 +15,6 @@
         </nav>
 
 
-
-        <br>
-        <br>
-
-        <div class='text-center' id='page-permid'>
-            <p>着せ替えたいモデルを<b>1体</b>選択してください</p>
-        </div>
         <br>
         <br>
 
@@ -29,19 +22,35 @@
 
             <div class='text-center' id='select_box'>
                 <div class='container container-m' id='model_image'>
+                    <nav class="navbar navbar-right bg-light">
+                        <span class="navbar-brand mb-0 h1 text-center">着せ替えたいモデルを<b>1体</b>選択してください</span>
+                    </nav>
+                    <br>
+                    <br>
+
 
                     <div class='row' id='model_position'>
+
                         {% csrf_token %}
                         {% for image in images %}
                         <!-- <p>{{ image.model_name }}</p> -->
+
                         <div class="col-md-4 img-hidden">
-                            <img class='img-fluid' src="{{ MEDIA_URL }}{{ image.img }}" width="100"><br>
-                            <input type="radio" class="btn-check" name="options" name="{{image.model_name }}"id="option1" autocomplete="off" checked>
-                            <label class="btn btn-secondary" for="option1">Checked</label>
+                            <div class="card" style="width: 18rem;">
+                                <br>
+                                <img id="{{ image.model_name }}" class='img-fluid' src="{{ MEDIA_URL }}{{ image.img }}" width="auto" height="auto"><br>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-Secondary btn-block active">
+                                      <input type="radio" name="{{ image.model_name }}" id="{{ image.model_name }}" autocomplete="off">選択
+                                    </label>
+                                </div>         
+
+                            </div>
+                            <br>
+                            <br>
 
                             <!-- <input class='text-center' type="checkbox" class="btn btn-Light" name="{{ image.model_name }}" value="{{ image.model_name }}"><br> -->
                         </div>
-
                         {% endfor %}
 
                     </div>
@@ -49,11 +58,17 @@
                 </div>
 
             </div>
+            <div id="output">
+
+            </div>
+
 
             <div class='text-center' id='submit_btn'>
                 <p>{{ alert }}</p>
                 <button type="submit" class="btn btn-Light" name="submit_btn" value="submit_btn">次へ</button> 
             </div>
+
+
 
         </form>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
