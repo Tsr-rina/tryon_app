@@ -26,6 +26,7 @@
                         <span class="navbar-brand mb-0 h1 text-center">着せ替えたいモデルを<b>1体</b>選択してください</span>
                     </nav>
                     <br>
+                    <p style="color:red;">{{ message }}</p>
                     <br>
 
 
@@ -36,11 +37,11 @@
                         <!-- <p>{{ image.model_name }}</p> -->
 
                         <div class="col-md-4 img-hidden">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card" style="width: 20rem;">
                                 <br>
                                 <img id="{{ image.model_name }}" class='img-fluid' src="{{ MEDIA_URL }}{{ image.img }}" width="auto" height="auto"><br>
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-Secondary btn-block active">
+                                    <label class="btn btn-Light btn-block active">
                                       <input type="radio" name="{{ image.model_name }}" id="{{ image.model_name }}" autocomplete="off">選択
                                     </label>
                                 </div>         
@@ -65,7 +66,7 @@
 
             <div class='text-center' id='submit_btn'>
                 <p>{{ alert }}</p>
-                <button type="submit" class="btn btn-Light" name="submit_btn" value="submit_btn">次へ</button> 
+                <button type="submit" class="btn btn-Light btn-lg" name="submit_btn" value="submit_btn">次へ</button> 
             </div>
 
 

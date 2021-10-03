@@ -15,6 +15,14 @@ def select_model(request):
 
 def select_cloth(request):
     if request.method == 'POST':
+        if (not request.POST.get("m_S")) and (not request.POST.get("m_M")) and (not request.POST.get("m_L")) and (not request.POST.get("fm_S")) and (not request.POST.get("fm_M")) and (not request.POST.get("fm_L")):
+            images = Human_model_img.objects.all()
+            context = {
+                'message':'モデルを1つ選択してください',
+                'images': images
+            }  
+            return render(request, "model_select.html", context)
+
         # if 'None' in request.POST:
         #     context = {
         #         'alert':'モデルを選択してください'
@@ -100,6 +108,19 @@ def select_cloth(request):
 def try_on(request):
     # 届くのは選択された「人体モデル」と「選択された洋服」
     if request.method == 'POST':
+        if (not request.POST.get("media/cloth_img/cloth1.jpg")) and (not request.POST.get("media/cloth_img/cloth2.jpg")) and (not request.POST.get("media/cloth_img/cloth3.jpg")) and (not request.POST.get("media/cloth_img/cloth4.jpg")) and (not request.POST.get("media/cloth_img/cloth5.jpg")) and (not request.POST.get("media/cloth_img/cloth6.jpg")):
+            keys_list = request.POST.keys()
+            keys_list = list(keys_list)
+
+            hm_img = Human_model_img.objects.values('img').filter(model_name=keys_list[0])
+            img_path = list(list(hm_img)[0].values())
+            cloth_img = Cloth_img.objects.all()
+            context = {
+                'message':'モデルを1つ選択してください',
+                'cloth_img': cloth_img,
+                'model_img_path':img_path
+            }  
+            return render(request, "cloth_select.html", context)
 
         if 'media/cloth_img/cloth1.jpg' in request.POST:
             keys_list = request.POST.keys()
