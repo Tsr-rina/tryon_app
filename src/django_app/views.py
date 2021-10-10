@@ -48,7 +48,7 @@ def select_cloth(request):
                 'name':'m_S',
                 'cloth_img':cloth_img,
             }
-            return render(request, 'cloth_select.html', context)
+            return render(request, 'result.html', context)
 
         elif 'm_M' in request.POST:
             model_data = Human_model_img.objects.values()
