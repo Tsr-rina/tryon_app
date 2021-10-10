@@ -29,7 +29,7 @@ def select_cloth(request):
         #     }
         #     return render(request, 'index',context)
 
-        if 'm_S' in request.POST:
+        elif 'm_S' in request.POST:
             model_data = Human_model_img.objects.values()
             cloth_img = Cloth_img.objects.values()
             # model_data1 = Human_model_img.objects.only()
@@ -48,7 +48,7 @@ def select_cloth(request):
                 'name':'m_S',
                 'cloth_img':cloth_img,
             }
-            return render(request, 'result.html', context)
+            return render(request, 'cloth_select.html', context)
 
         elif 'm_M' in request.POST:
             model_data = Human_model_img.objects.values()
@@ -108,6 +108,7 @@ def select_cloth(request):
 def try_on(request):
     # 届くのは選択された「人体モデル」と「選択された洋服」
     if request.method == 'POST':
+        print(request.POST)
         if (not request.POST.get("media/cloth_img/cloth1.jpg")) and (not request.POST.get("media/cloth_img/cloth2.jpg")) and (not request.POST.get("media/cloth_img/cloth3.jpg")) and (not request.POST.get("media/cloth_img/cloth4.jpg")) and (not request.POST.get("media/cloth_img/cloth5.jpg")) and (not request.POST.get("media/cloth_img/cloth6.jpg")):
             keys_list = request.POST.keys()
             keys_list = list(keys_list)
@@ -122,7 +123,7 @@ def try_on(request):
             }  
             return render(request, "cloth_select.html", context)
 
-        if 'media/cloth_img/cloth1.jpg' in request.POST:
+        elif '/media/media/cloth_img/cloth1.jpg' in request.POST:
             keys_list = request.POST.keys()
             keys_list = list(keys_list)
 
@@ -139,33 +140,33 @@ def try_on(request):
 
             context = {
                 'hello': 'Hello World!',
-                'cloth_path':'media_cloth/cloth1.jpg',
+                'cloth_path':'media/cloth_img/cloth1.jpg',
                 'mask_path':mask_path,
             }
             return render(request, 'result.html', context)
 
-        if 'media/cloth_img/cloth2.jpg' in request.POST:
+        elif 'media/cloth_img/cloth2.jpg' in request.POST:
 
             context = {
                 'hello': 'Hello World!',
             }
             return render(request, 'result.html', context)
 
-        if 'media/cloth_img/cloth3.jpg' in request.POST:
+        elif 'media/cloth_img/cloth3.jpg' in request.POST:
 
             context = {
                 'hello': 'Hello World!',
             }
             return render(request, 'result.html', context)
 
-        if 'media/cloth_img/cloth4.jpg' in request.POST:
+        elif 'media/cloth_img/cloth4.jpg' in request.POST:
 
             context = {
                 'hello': 'Hello World!',
             }
             return render(request, 'result.html', context)
 
-        if 'media/cloth_img/cloth5.jpg' in request.POST:
+        elif 'media/cloth_img/cloth5.jpg' in request.POST:
 
             context = {
                 'hello': 'Hello World!',
