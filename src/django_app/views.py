@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Human_model_img
 from .models import Cloth_img
-from .gan import CallNetWork
+from django_app.gan import CallNetWork
 
 def index(request):
     return render(request, 'index.html')
@@ -30,6 +30,10 @@ def select_cloth(request):
         #     return render(request, 'index',context)
 
         elif 'm_S' in request.POST:
+            print("通過1")
+            keys_list = request.POST.keys()
+            print('通過2')
+            print(keys_list)
             model_data = Human_model_img.objects.values()
             cloth_img = Cloth_img.objects.values()
             # model_data1 = Human_model_img.objects.only()
@@ -106,36 +110,55 @@ def select_cloth(request):
             return render(request, 'cloth_select.html', context)
 
 def try_on(request):
-    # 届くのは選択された「人体モデル」と「選択された洋服」
-    if request.method == 'POST':
-        print(request.POST)
-        if (not request.POST.get("media/cloth_img/cloth1.jpg")) and (not request.POST.get("media/cloth_img/cloth2.jpg")) and (not request.POST.get("media/cloth_img/cloth3.jpg")) and (not request.POST.get("media/cloth_img/cloth4.jpg")) and (not request.POST.get("media/cloth_img/cloth5.jpg")) and (not request.POST.get("media/cloth_img/cloth6.jpg")):
+    # ganモジュールに送信→全身画像,マスク画像,洋服
+    if request.method == 'POST': 
+        keys_list = request.POST.keys()
+        # print('通過3')
+        keys_list = list(keys_list)
+        # if (not request.POST.get("media/cloth_img/cloth1.jpg")) and (not request.POST.get("media/cloth_img/cloth2.jpg")) and (not request.POST.get("media/cloth_img/cloth3.jpg")) and (not request.POST.get("media/cloth_img/cloth4.jpg")) and (not request.POST.get("media/cloth_img/cloth5.jpg")) and (not request.POST.get("media/cloth_img/cloth6.jpg")):
+        if (keys_list[2] != 'media/cloth_img/cloth1.jpg') and (keys_list[2] != 'media/cloth_img/cloth2.jpg') and (keys_list[2] != 'media/cloth_img/cloth3.jpg') and (keys_list[2] != 'media/cloth_img/cloth4.jpg') and (keys_list[2] != 'media/cloth_img/cloth5.jpg') and (keys_list[2] != 'media/cloth_img/cloth6.jpg'):
+            
             keys_list = request.POST.keys()
+            # print('通過3')
             keys_list = list(keys_list)
+            print(keys_list)
+            # # 選択した服
+            # print(keys_list[2])
 
+            # 人体モデル
             hm_img = Human_model_img.objects.values('img').filter(model_name=keys_list[0])
             img_path = list(list(hm_img)[0].values())
+            # print(hm_img)
+            # print(img_path[0])
+
             cloth_img = Cloth_img.objects.all()
             context = {
-                'message':'モデルを1つ選択してください',
+                'message':'洋服を1つ選択してください',
                 'cloth_img': cloth_img,
-                'model_img_path':img_path
-            }  
+                'img':img_path[0],
+                'name':keys_list[0]
+            }
             return render(request, "cloth_select.html", context)
 
-        elif '/media/media/cloth_img/cloth1.jpg' in request.POST:
+        elif 'media/cloth_img/cloth1.jpg' in request.POST:
             keys_list = request.POST.keys()
             keys_list = list(keys_list)
+            print("通過4")
+            # 選択した洋服
+            cloth_path = keys_list[2]
 
+            # 人体モデル
             hm_img = Human_model_img.objects.values('img').filter(model_name=keys_list[0])
-            img_path = list(list(hm_img)[0].values())
+            img_path = list(list(hm_img)[0].values())[0]
 
+            # マスク画像
             hm_mask = Human_model_img.objects.values('mask').filter(model_name=keys_list[0])
-            mask_path = list(list(hm_mask)[0].values())
-            
-            image = CallNetWork(hm_img, mask_path, 'media/cloth_img/cloth1.jpg')
+            mask_path = list(list(hm_mask)[0].values())[0]
 
-            print(image)
+            image_make = CallNetWork(str(img_path), str(mask_path), str(cloth_path))
+            made = image_make.forward()
+            print("戻ってきました")
+            print(made)
 
 
             context = {
