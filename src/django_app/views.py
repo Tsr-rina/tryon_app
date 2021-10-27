@@ -120,6 +120,22 @@ def try_on(request):
     if request.method == 'POST': 
         keys_list = request.POST.keys()
         keys_list = list(keys_list)
+        # 選択した洋服
+        cloth_path = keys_list[2]
+        # print("cloth_path:{}".format(cloth_path))
+        cloth_path = "./media/"+str(cloth_path)
+
+        # 選択した人体モデルのマスク画像取得
+        hm_img_mask = Human_model_img.objects.values('mask').filter(model_name=keys_list[0])
+        mask_path = list(list(hm_img_mask)[0].values())
+        mask_path = "./media/"+str(mask_path[0])
+        # print("mask_path:{}".format(mask_path))
+
+        # 人体モデル
+        hm_img = Human_model_img.objects.values('img').filter(model_name=keys_list[0])
+        hm_path = list(list(hm_img)[0].values())
+        hm_path = "./media/"+str(hm_path[0])
+
         # if (not request.POST.get("media/cloth_img/cloth1.jpg")) and (not request.POST.get("media/cloth_img/cloth2.jpg")) and (not request.POST.get("media/cloth_img/cloth3.jpg")) and (not request.POST.get("media/cloth_img/cloth4.jpg")) and (not request.POST.get("media/cloth_img/cloth5.jpg")) and (not request.POST.get("media/cloth_img/cloth6.jpg")):
         if (keys_list[2] != 'media/cloth_img/cloth1.jpg') and (keys_list[2] != 'media/cloth_img/cloth2.jpg') and (keys_list[2] != 'media/cloth_img/cloth3.jpg') and (keys_list[2] != 'media/cloth_img/cloth4.jpg') and (keys_list[2] != 'media/cloth_img/cloth5.jpg') and (keys_list[2] != 'media/cloth_img/cloth6.jpg'):
             
@@ -147,23 +163,6 @@ def try_on(request):
         elif 'media/cloth_img/cloth1.jpg' in request.POST:
             # keys_list = request.POST.keys()
             # keys_list = list(keys_list)
-            print("通過4")
-
-            # 選択した洋服
-            cloth_path = keys_list[2]
-            # print("cloth_path:{}".format(cloth_path))
-            cloth_path = "./media/"+str(cloth_path)
-
-            # 選択した人体モデルのマスク画像取得
-            hm_img_mask = Human_model_img.objects.values('mask').filter(model_name=keys_list[0])
-            mask_path = list(list(hm_img_mask)[0].values())
-            mask_path = "./media/"+str(mask_path[0])
-            # print("mask_path:{}".format(mask_path))
-
-            # 人体モデル
-            hm_img = Human_model_img.objects.values('img').filter(model_name=keys_list[0])
-            hm_path = list(list(hm_img)[0].values())
-            hm_path = "./media/"+str(hm_path[0])
 
             # gan_preprocessing→入力画像生成
             colored_image, get_mask_shape = gan_preprocessing(mask_path, cloth_path)
@@ -193,29 +192,58 @@ def try_on(request):
 
         elif 'media/cloth_img/cloth2.jpg' in request.POST:
 
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, cloth_path)
+            print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            transfer_img = opencv_to_pil(all_got_img)
+
             context = {
-                'hello': 'Hello World!',
+                'transfer_img':transfer_img,  
             }
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth3.jpg' in request.POST:
 
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, cloth_path)
+            print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            transfer_img = opencv_to_pil(all_got_img)
+
             context = {
-                'hello': 'Hello World!',
+                'transfer_img':transfer_img,  
             }
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth4.jpg' in request.POST:
 
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, cloth_path)
+            print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            transfer_img = opencv_to_pil(all_got_img)
             context = {
-                'hello': 'Hello World!',
+                'transfer_img':transfer_img,  
             }
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth5.jpg' in request.POST:
 
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, cloth_path)
+            print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            transfer_img = opencv_to_pil(all_got_img)
             context = {
-                'hello': 'Hello World!',
+                'transfer_img':transfer_img,  
+            }
+            return render(request, 'result.html', context)
+
+        elif 'media/cloth_img/cloth6.jpg' in request.POST:
+            
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, cloth_path)
+            print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            transfer_img = opencv_to_pil(all_got_img)
+            context = {
+                'transfer_img':transfer_img,  
             }
             return render(request, 'result.html', context)
  
