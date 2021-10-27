@@ -20,7 +20,5 @@ def makecounter(path):
   # 差分をとる
   diff = cv2.absdiff(dilated, gray)
   # 白黒反転して2値化
-  contour = cv2.adaptiveThreshold(255 - diff, 255,
-                                  cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                  cv2.THRESH_BINARY, 7, 8)
+  contour = cv2.adaptiveThreshold(255 - diff, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 7, 8)
   return contour
