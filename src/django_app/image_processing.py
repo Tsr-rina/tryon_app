@@ -6,7 +6,7 @@ import base64
 from django_app.senga import makecounter
 from django_app.overlay import overlayImage
 
-def gan_preprocessing(mask_path, cloth_path):
+def gan_preprocessing(mask_path, cloth):
     # ここに画像処理
     mask_img = cv2.imread(mask_path)
     print("mask_img.shape:{}".format(mask_img.shape))
@@ -21,10 +21,10 @@ def gan_preprocessing(mask_path, cloth_path):
     print("抽出後のリサイズ:{}".format(get_mask.shape))
 
     # 洋服の線画past
-    cloth = makecounter(cloth_path)
-    print("cloth.shape:{}".format(cloth.shape))
-    resized_cloth = cv2.resize(cloth, dsize=(192,256))
-    print("resized_cloth:{}".format(resized_cloth.shape))
+    # cloth = makecounter(cloth_path)
+    # print("cloth.shape:{}".format(cloth.shape))
+    # resized_cloth = cv2.resize(cloth, dsize=(192,256))
+    # print("resized_cloth:{}".format(resized_cloth.shape))
 
     # オーバーレイ
     black = [0, 0, 0]

@@ -9,7 +9,7 @@
         <nav class="navbar navbar-light" style="border-bottom: solid 5px black;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">TryonApp</a>
+                    <a class="navbar-brand" href="{% url 'index' %}">TryonApp</a>
                 </div>
             </div>
         </nav>
@@ -73,6 +73,7 @@
 
             <div class='text-center' id='submit_btn'>
                 <p>{{ alert }}</p>
+                <a href="{{ request.META.HTTP_REFERER }}"><button class="btn btn-Light btn-lg" type="button" style="margin-right:5%;">戻る</button></a>
                 <button type="submit" class="btn btn-Light btn-lg" name="submit_btn" value=" submit_btn">試着結果へ</button>
             </div>
 
