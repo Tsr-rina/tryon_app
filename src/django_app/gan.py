@@ -285,7 +285,7 @@ class CallNetWork():
     def forward(self):
         print("ここまで来ました")
         Tensor = torch.Tensor
-
+        # 持ってきた画像を前処理して入力 or ajustmentで前処理してから持ってくる
         num_create = 0
         for batch_num, data in enumerate(self.dataloader):
             print(batch_num)

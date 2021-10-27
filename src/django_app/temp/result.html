@@ -16,12 +16,22 @@
         <br>
 
         <div class="text-center">
-            <h3>試着結果を出すページ</h3>
-            <h3>ここに試着結果を表示</h3>
-            <p>{{ cloth_path }}</p>
-            <p>{{ mask_path }}</p>
+            <h3>試着結果</h3>
+            <!-- <p>{{ cloth_path }}</p>
+            <p>{{ mask_path }}</p> -->
         </div>
-        <img src="data:image/png;base64,{{ base64Img }}" alt="">
+
+        <div class="text-center">
+
+        </div>
+        <div class="col-md-4 img-hidden">
+            <div class="card text-center" style="width: 20rem;">
+                <br>
+                <img src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto">
+
+            </div>
+            <!-- <input class='text-center' type="checkbox" class="btn btn-Light" name="{{ image.model_name }}" value="{{ image.model_name }}"><br> -->
+        </div>
 
 
         <!-- 戻るボタン -->
