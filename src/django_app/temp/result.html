@@ -20,30 +20,44 @@
             <!-- <p>{{ cloth_path }}</p>
             <p>{{ mask_path }}</p> -->
         </div>
+        <br>
+        <br>
+        <br>
 
-        <div class="result">
-            <div class="col-md-4 img-hidden">
-                <div class="card" style="width: 20rem;">
-                    <img class='img-fluid' src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto">
+        <div class='container container-m' id='model_image'>
+
+            <div class="row text-center">
+
+                <div class="col-md-4 img-hidden">
+                    <div id="img_left"  class="card" style="width: 25rem;">
+                        <!-- <img class='img-fluid' src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto"> -->
+                    </div>
+
                 </div>
+                <div class="col-md-4 img-hidden">
+                    <div class="card" style="width: 20rem;">
+                        <img class='img-fluid' src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto">
+                    </div>
 
-                <div class="card" style="width: 20rem;">
-                    <img class='img-fluid' src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto">
                 </div>
+                <div class="col-md-4 img-hidden">
+                    <div id="img_right" class="card" style="width: 20rem;">
+                        <!-- <img   class='img-fluid' src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto"> -->
+                    </div>
 
-                <div class="card" style="width: 20rem;">
-                    <img class='img-fluid' src="data:image/png;base64,{{ transfer_img }}" alt="" width="auto" height="auto">
                 </div>
-
-
-
-                
             </div>
+
         </div>
 
-        <a href="{% url 'tryon_app:model_select' %}"><button class="btn btn-Light btn-lg" type="button">続ける</button></a>
+        <br>
+        <br>
+        <br>
 
+        <div class='text-center' id='submit_btn'>
+            <a href="{% url 'tryon_app:model_select' %}"><button class="btn btn-Light btn-lg" type="button">続ける</button></a>
 
+        </div>
 
 
 
@@ -57,8 +71,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <script>
-            document.getElementById("result_right").style = "visibility:hidden;"
-            document.getElementById("result_left").style = "visibility:hidden;"
+            document.getElementById("img_right").style = "visibility:hidden;";
+            document.getElementById("img_left").style = "visibility:hidden;";
         </script>
 
     </body>
