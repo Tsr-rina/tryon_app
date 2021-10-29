@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Human_model_img
 from .models import Cloth_img
+from .models import made_cloth
 from django_app.gan import CallNetWork
 import cv2
 import numpy as np
@@ -140,6 +141,8 @@ def try_on(request):
         hm_path = list(list(hm_img)[0].values())
         hm_path = "./media/"+str(hm_path[0])
 
+
+
         # if (not request.POST.get("media/cloth_img/cloth1.jpg")) and (not request.POST.get("media/cloth_img/cloth2.jpg")) and (not request.POST.get("media/cloth_img/cloth3.jpg")) and (not request.POST.get("media/cloth_img/cloth4.jpg")) and (not request.POST.get("media/cloth_img/cloth5.jpg")) and (not request.POST.get("media/cloth_img/cloth6.jpg")):
         if (keys_list[2] != 'media/cloth_img/cloth1.jpg') and (keys_list[2] != 'media/cloth_img/cloth2.jpg') and (keys_list[2] != 'media/cloth_img/cloth3.jpg') and (keys_list[2] != 'media/cloth_img/cloth4.jpg') and (keys_list[2] != 'media/cloth_img/cloth5.jpg') and (keys_list[2] != 'media/cloth_img/cloth6.jpg'):
             
@@ -175,8 +178,15 @@ def try_on(request):
             # GANに入力
             # image_make = CallNetWork(str(img_path), str(mask_path), str(cloth_path))
 
+            made_img = made_cloth.objects.values('made_cloth_img').filter(made_cloth_color="white")
+            made_path = list(list(made_img)[0].values())
+            made_path = "./media/"+str(made_path[0])
+            # print("made_path:{}".format(made_path))
+            put_made_img = cv2.imread(made_path,-1)
+            put_made_img = cv2.resize(put_made_img, dsize=(192,256))
+
             # put_imgにGANの出力結果を入力
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_img)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
             print("colored_image:{}".format(colored_image.shape))
 
 
@@ -199,9 +209,14 @@ def try_on(request):
 
         elif 'media/cloth_img/cloth2.jpg' in request.POST:
 
+            made_img = made_cloth.objects.values('made_cloth_img').filter(made_cloth_color="pink")
+            made_path = list(list(made_img)[0].values())
+            made_path = "./media/"+str(made_path[0])
+            # print("made_path:{}".format(made_path))
+            put_made_img = cv2.imread(made_path,-1)
 
             put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_img)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
             print("colored_image:{}".format(colored_image.shape))
             all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
             transfer_img = opencv_to_pil(all_got_img)
@@ -212,9 +227,14 @@ def try_on(request):
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth3.jpg' in request.POST:
+            made_img = made_cloth.objects.values('made_cloth_img').filter(made_cloth_color="orange")
+            made_path = list(list(made_img)[0].values())
+            made_path = "./media/"+str(made_path[0])
+            # print("made_path:{}".format(made_path))
+            put_made_img = cv2.imread(made_path,-1)
 
             put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_img)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
             print("colored_image:{}".format(colored_image.shape))
             all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
             transfer_img = opencv_to_pil(all_got_img)
@@ -225,9 +245,14 @@ def try_on(request):
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth4.jpg' in request.POST:
+            made_img = made_cloth.objects.values('made_cloth_img').filter(made_cloth_color="green")
+            made_path = list(list(made_img)[0].values())
+            made_path = "./media/"+str(made_path[0])
+            # print("made_path:{}".format(made_path))
+            put_made_img = cv2.imread(made_path,-1)
 
             put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_img)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
             print("colored_image:{}".format(colored_image.shape))
             all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
             transfer_img = opencv_to_pil(all_got_img)
@@ -238,9 +263,14 @@ def try_on(request):
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth5.jpg' in request.POST:
+            made_img = made_cloth.objects.values('made_cloth_img').filter(made_cloth_color="light-blue")
+            made_path = list(list(made_img)[0].values())
+            made_path = "./media/"+str(made_path[0])
+            # print("made_path:{}".format(made_path))
+            put_made_img = cv2.imread(made_path,-1)
 
             put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_img)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
             print("colored_image:{}".format(colored_image.shape))
             all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
             transfer_img = opencv_to_pil(all_got_img)
@@ -250,9 +280,14 @@ def try_on(request):
             return render(request, 'result.html', context)
 
         elif 'media/cloth_img/cloth6.jpg' in request.POST:
+            made_img = made_cloth.objects.values('made_cloth_img').filter(made_cloth_color="blue")
+            made_path = list(list(made_img)[0].values())
+            made_path = "./media/"+str(made_path[0])
+            # print("made_path:{}".format(made_path))
+            put_made_img = cv2.imread(made_path,-1)
 
             put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_img)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
             print("colored_image:{}".format(colored_image.shape))
             all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
             transfer_img = opencv_to_pil(all_got_img)
