@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Human_model_img
 from .models import Cloth_img
 from .models import made_cloth
-from django_app.gan import CallNetWork
+# from django_app.gan import CallNetWork
 import cv2
 import numpy as np
 from PIL import Image
@@ -44,7 +44,7 @@ def select_cloth(request):
 
         elif 'm_S' in request.POST:
             keys_list = request.POST.keys()
-            print(keys_list)
+            # print(keys_list)
             model_data = Human_model_img.objects.values()
             cloth_img = Cloth_img.objects.values()
             # model_data1 = Human_model_img.objects.only()
@@ -148,7 +148,7 @@ def try_on(request):
             
             keys_list = request.POST.keys()
             keys_list = list(keys_list)
-            print(keys_list)
+            # print(keys_list)
             # # 選択した服
             # print(keys_list[2])
 
@@ -174,7 +174,7 @@ def try_on(request):
             # gan_preprocessing→入力画像生成
 
             # GANの入力画像は線画
-            put_img = makecounter(cloth_path)
+            # put_img = makecounter(cloth_path)
             # GANに入力
             # image_make = CallNetWork(str(img_path), str(mask_path), str(cloth_path))
 
@@ -185,16 +185,35 @@ def try_on(request):
             put_made_img = cv2.imread(made_path,-1)
             put_made_img = cv2.resize(put_made_img, dsize=(192,256))
 
+            if keys_list[0] == "m_S" or keys_list[0] == "fm_S" or keys_list[0] == "fm_M":
+                top = 45
+                bottom = 128 
+                left = 57
+                right = 130
+            elif keys_list[0] == "fm_L":
+                top = 35
+                bottom = 150
+                left = 15
+                right = 160              
+            else:
+                top = 20
+                bottom = 165
+                left = 5
+                right = 175
+                
+
+
+            # get_mask = resized_mask[45:128, 57:130]
             # put_imgにGANの出力結果を入力
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
-            print("colored_image:{}".format(colored_image.shape))
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img,top, bottom, left, right)
+            # print("colored_image:{}".format(colored_image.shape))
 
 
             # GANの結果を受け取り
             # なのでcolored_imageが変更の可能性あり(image_makeかな)
             # 値を受け渡す
             # all_got_img = synthetic(to_whited,mask_path,hm_path)
-            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path,top,bottom, left,right)
 
             # OpenCV→PIL変換
             transfer_img = opencv_to_pil(all_got_img)
@@ -214,11 +233,17 @@ def try_on(request):
             made_path = "./media/"+str(made_path[0])
             # print("made_path:{}".format(made_path))
             put_made_img = cv2.imread(made_path,-1)
+            put_made_img = cv2.resize(put_made_img, dsize=(192,256))
 
-            put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
-            print("colored_image:{}".format(colored_image.shape))
-            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            top = 5
+            bottom = 175
+            left = 5
+            right = 190
+
+            # put_img = makecounter(cloth_path)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img,top, bottom, left, right)
+            # print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path,top,bottom, left,right)
             transfer_img = opencv_to_pil(all_got_img)
 
             context = {
@@ -232,11 +257,15 @@ def try_on(request):
             made_path = "./media/"+str(made_path[0])
             # print("made_path:{}".format(made_path))
             put_made_img = cv2.imread(made_path,-1)
-
-            put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
-            print("colored_image:{}".format(colored_image.shape))
-            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            put_made_img = cv2.resize(put_made_img, dsize=(192,256))
+            top = 5
+            bottom = 175
+            left = 5
+            right = 190        
+            # put_img = makecounter(cloth_path)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img,top, bottom, left, right)
+            # print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path,top,bottom, left,right)
             transfer_img = opencv_to_pil(all_got_img)
 
             context = {
@@ -250,11 +279,16 @@ def try_on(request):
             made_path = "./media/"+str(made_path[0])
             # print("made_path:{}".format(made_path))
             put_made_img = cv2.imread(made_path,-1)
+            put_made_img = cv2.resize(put_made_img, dsize=(192,256))
+            top = 5
+            bottom = 175
+            left = 5
+            right = 190
 
-            put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
-            print("colored_image:{}".format(colored_image.shape))
-            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            # put_img = makecounter(cloth_path)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img,top, bottom, left, right)
+            # print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path,top,bottom, left,right)
             transfer_img = opencv_to_pil(all_got_img)
 
             context = {
@@ -268,11 +302,16 @@ def try_on(request):
             made_path = "./media/"+str(made_path[0])
             # print("made_path:{}".format(made_path))
             put_made_img = cv2.imread(made_path,-1)
+            put_made_img = cv2.resize(put_made_img, dsize=(192,256))
+            top = 5
+            bottom = 175
+            left = 5
+            right = 190
 
-            put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
-            print("colored_image:{}".format(colored_image.shape))
-            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            # put_img = makecounter(cloth_path)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img,top, bottom, left, right)
+            # print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path,top,bottom, left,right)
             transfer_img = opencv_to_pil(all_got_img)
             context = {
                 'transfer_img':transfer_img,  
@@ -285,11 +324,15 @@ def try_on(request):
             made_path = "./media/"+str(made_path[0])
             # print("made_path:{}".format(made_path))
             put_made_img = cv2.imread(made_path,-1)
-
-            put_img = makecounter(cloth_path)
-            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img)
-            print("colored_image:{}".format(colored_image.shape))
-            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path)
+            put_made_img = cv2.resize(put_made_img, dsize=(192,256))
+            top = 5
+            bottom = 175
+            left = 5
+            right = 190
+            # put_img = makecounter(cloth_path)
+            colored_image, get_mask_shape = gan_preprocessing(mask_path, put_made_img,top, bottom, left, right)
+            # print("colored_image:{}".format(colored_image.shape))
+            all_got_img = synthetic(get_mask_shape, colored_image,mask_path,hm_path,top,bottom, left,right)
             transfer_img = opencv_to_pil(all_got_img)
             context = {
                 'transfer_img':transfer_img,  
