@@ -29,7 +29,7 @@ GS_BUCKET_NAME = 'gs_tryon'
 from google.oauth2 import service_account
 
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    os.path.join(BASE_DIR, ''),
+    os.path.join(BASE_DIR, 'gsproject-330807-169ec2ac5998.json'),
 )
 # MODEL_ROOT = BASE_DIR.joinpath('models')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'models')
@@ -144,7 +144,10 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 
 

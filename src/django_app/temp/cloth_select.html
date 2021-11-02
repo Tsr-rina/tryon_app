@@ -73,7 +73,7 @@
 
             <div class='text-center' id='submit_btn'>
                 <p>{{ alert }}</p>
-                <a href="{{ request.META.HTTP_REFERER }}"><button class="btn btn-Light btn-lg" type="button" style="margin-right:5%;">戻る</button></a>
+                <a href="{% url 'tryon_app:model_select' %}"><button class="btn btn-Light btn-lg" type="button">戻る</button></a>
                 <button type="submit" class="btn btn-Light btn-lg" name="submit_btn" value=" submit_btn">試着結果へ</button>
             </div>
 
