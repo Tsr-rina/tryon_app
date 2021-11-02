@@ -9,3 +9,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['tryonapps.herokuapp.com']
 
+DATABASES = {
+    'default': dj_database_url.config()
+}

@@ -75,7 +75,7 @@
 
 
             <div class='text-center' id='submit_btn'>
-                <a href="{{ request.META.HTTP_REFERER }}"><button class="btn btn-Light btn-lg" type="button" style="margin-right:5%;">戻る</button></a>
+                <a href="{% url 'tryon_app:index' %}"><button class="btn btn-Light btn-lg" type="button">戻る</button></a>
                 <button type="submit" class="btn btn-Light btn-lg" name="submit_btn" value="submit_btn">次へ</button> 
             </div>
 
