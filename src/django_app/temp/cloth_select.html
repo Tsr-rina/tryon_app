@@ -1,5 +1,5 @@
 <html>
-
+{% load boost %}
     <head>
         <meta charset="utf-8">
         <title>tryon_app</title>
@@ -46,15 +46,16 @@
                     <br>
                     <div class="row">
                         {% csrf_token %}
-                        {% for image in cloth_img %}
+                        {% for image, id in cloth_img|zip:id_count %}
                         <div class="col-md-4 img-hidden">
                             <div class="card" style="width: 20rem;">
                                 <br>
                                 <img class='img-fluid' src="{{ MEDIA_URL }}{{ image.cloth_img }}" width="auto" height="auto"><br>
-                                <p>{{ image.cloth_img }}</p>
+                                <!-- <p>{{ image.cloth_img }}</p>
+                                <p>{{ id }}</p> -->
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label id="{{ image.cloth_img }}" class="btn btn-Light btn-block active">
-                                      <input type="radio" name="{{ image.cloth_img }}" id="{{ image.cloth_img }}" autocomplete="off">選択
+                                    <label id="{{ id }}" class="btn btn-Light btn-block active">
+                                      <input type="radio" name="{{ image.cloth_img }}"  autocomplete="off">選択
                                     </label>
                                 </div>         
 
@@ -87,53 +88,53 @@
     <script>
         document.getElementById("hide_checkbox").style = "visibility:hidden;"
 
-        $('#media/cloth_img/cloth1.jpg').click(function(){
-            $('#media/cloth_img/cloth1.jpg').css("background-color", "#c0c0c0");
-            $('#media/cloth_img/cloth2.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth3.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth4.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth5.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth6.jpg').css("background-color", "#f8f9fa");
+        $('#cloth1').click(function(){
+            $('#cloth1').css("background-color", "#c0c0c0");
+            $('#cloth2').css("background-color", "#f8f9fa");
+            $('#cloth3').css("background-color", "#f8f9fa");
+            $('#cloth4').css("background-color", "#f8f9fa");
+            $('#cloth5').css("background-color", "#f8f9fa");
+            $('#cloth6').css("background-color", "#f8f9fa");
         });
-        $('#media/cloth_img/cloth2.jpg').click(function(){
-            $('#media/cloth_img/cloth1.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth2.jpg').css("background-color", "#c0c0c0");
-            $('#media/cloth_img/cloth3.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth4.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth5.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth6.jpg').css("background-color", "#f8f9fa");
+        $('#cloth2').click(function(){
+            $('#cloth1').css("background-color", "#f8f9fa");
+            $('#cloth2').css("background-color", "#c0c0c0");
+            $('#cloth3').css("background-color", "#f8f9fa");
+            $('#cloth4').css("background-color", "#f8f9fa");
+            $('#cloth5').css("background-color", "#f8f9fa");
+            $('#cloth6').css("background-color", "#f8f9fa");
         });
-        $('#media/cloth_img/cloth3.jpg').click(function(){
-            $('#media/cloth_img/cloth1.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth2.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth3.jpg').css("background-color", "#c0c0c0");
-            $('#media/cloth_img/cloth4.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth5.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth6.jpg').css("background-color", "#f8f9fa");
+        $('#cloth3').click(function(){
+            $('#cloth1').css("background-color", "#f8f9fa");
+            $('#cloth2').css("background-color", "#f8f9fa");
+            $('#cloth3').css("background-color", "#c0c0c0");
+            $('#cloth4').css("background-color", "#f8f9fa");
+            $('#cloth5').css("background-color", "#f8f9fa");
+            $('#cloth6').css("background-color", "#f8f9fa");
         });
-        $('#media/cloth_img/cloth4.jpg').click(function(){
-            $('#media/cloth_img/cloth1.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth2.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth3.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth4.jpg').css("background-color", "#c0c0c0");
-            $('#media/cloth_img/cloth5.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth6.jpg').css("background-color", "#f8f9fa");
+        $('#cloth4').click(function(){
+            $('#cloth1').css("background-color", "#f8f9fa");
+            $('#cloth2').css("background-color", "#f8f9fa");
+            $('#cloth3').css("background-color", "#f8f9fa");
+            $('#cloth4').css("background-color", "#c0c0c0");
+            $('#cloth5').css("background-color", "#f8f9fa");
+            $('#cloth6').css("background-color", "#f8f9fa");
         });
-        $('#media/cloth_img/cloth5.jpg').click(function(){
-            $('#media/cloth_img/cloth1.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth2.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth3.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth4.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth5.jpg').css("background-color", "#c0c0c0");
-            $('#media/cloth_img/cloth6.jpg').css("background-color", "#f8f9fa");
+        $('#cloth5').click(function(){
+            $('#cloth1').css("background-color", "#f8f9fa");
+            $('#cloth2').css("background-color", "#f8f9fa");
+            $('#cloth3').css("background-color", "#f8f9fa");
+            $('#cloth4').css("background-color", "#f8f9fa");
+            $('#cloth5').css("background-color", "#c0c0c0");
+            $('#cloth6').css("background-color", "#f8f9fa");
         });
-        $('#media/cloth_img/cloth6.jpg').click(function(){
-            $('#media/cloth_img/cloth1.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth2.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth3.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth4.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth5.jpg').css("background-color", "#f8f9fa");
-            $('#media/cloth_img/cloth6.jpg').css("background-color", "#c0c0c0");
+        $('#cloth6').click(function(){
+            $('#cloth1').css("background-color", "#f8f9fa");
+            $('#cloth2').css("background-color", "#f8f9fa");
+            $('#cloth3').css("background-color", "#f8f9fa");
+            $('#cloth4').css("background-color", "#f8f9fa");
+            $('#cloth5').css("background-color", "#f8f9fa");
+            $('#cloth6').css("background-color", "#c0c0c0");
         });
     </script>
 </html>
