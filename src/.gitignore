@@ -1,3 +1,4 @@
 .DS_Store
+/django_prj/local_setting.py
 local_settings.py
 gan.py
